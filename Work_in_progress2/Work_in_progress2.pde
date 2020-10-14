@@ -32,8 +32,61 @@ int k = 20;
 float m;
 
 
+int temp;
+String description;
+int humidity;
+int temp_max;
+int temp_min;
+int speed;
+//String speed;
+String wind;
+int pressure;
+
+
+
 void setup(){
 size(800, 800); 
+String key= "1e73eb5975b9055051f49fa6a33e1032"; 
+
+String url = "http://api.openweathermap.org/data/2.5/weather?q=Queens&units=imperial&appid=" + key;
+String Weekly = "http://api.openweathermap.org/data/2.5/forecast?q=Queens&units=imperial&appid=" + key;
+  
+  
+  ///5 day Weekly forcast************
+  JSONObject forecast = loadJSONObject(Weekly);
+  JSONArray list= forecast.getJSONArray("list");
+  
+  
+  JSONObject current_weather = loadJSONObject(url); 
+  JSONObject main= current_weather.getJSONObject("main"); 
+  temp = int(main.getFloat("temp"));
+  humidity = int(main.getFloat("humidity"));
+  temp_max = int(main.getFloat("temp_max"));
+  temp_min = int(main.getFloat("temp_min"));
+  pressure = int(main.getFloat("pressure"));
+  JSONObject wind= current_weather.getJSONObject("wind");
+  speed = int(wind.getFloat("speed"));
+
+//api.openweathermap.org/data/2.5/forecast?q=Queens&units=imperial&appid=
+
+
+
+  JSONArray descriptions_array = current_weather.getJSONArray("weather"); 
+  JSONObject descriptions_object = descriptions_array.getJSONObject(0); 
+  description = descriptions_object.getString("description");
+
+ print(list);
+println(speed);  
+println(temp_min);
+println(temp_max); 
+println(temp);
+println(description);
+println(humidity);
+
+
+
+
+
 
 }
 
@@ -205,8 +258,8 @@ void draw(){
 if (mousePressed && mouseX > 720 && mouseY > 720 && (h >= 7) && (h < 17)){
 
 background(48,139,206);
-img = loadImage("precipitation.png");
-image(img, 500, 205, 80, 80 );
+img = loadImage("pressure.png");
+image(img, 500, 205, 75, 75 );
 img = loadImage("Winds.png");
 image(img, 500, 55, 80, 80 );
 img = loadImage("humidity.png");tint(225);
@@ -255,13 +308,13 @@ for (float q = 255; q > 0; q -=7){
 
 
 textSize(32);text("Todays High", 200,200);
-textSize(32);text("X ", 280,250);
-textSize(32);text("Todays Low", 550,550);
-textSize(32);text("X ", 640,600);
-textSize(32);text("Wind X", 550,105);
-textSize(32);text("Humidity X", 550,175);
-textSize(32);text("Precipitation X", 550,245);
-
+textSize(32);text(temp_max, 275,250);
+textSize(32);text("Todays Low", 545,550);
+textSize(32);text(temp_min, 635,600);
+textSize(32);text("Wind " + speed + " mph", 550,105);
+textSize(32);text("Humidity " + humidity, 550,175);
+textSize(32);text("Pressure " + pressure, 550,245);
+textSize(15);text("mb", 775,245);
 
 //int star = 12;
 
@@ -271,8 +324,8 @@ textSize(32);text("Precipitation X", 550,245);
 //17 21
 else if (mousePressed && mouseX > 720 && mouseY > 720 && (h >= 17) && (h <= 21)){
 background(255,100,0);
-img = loadImage("precipitation.png");
-image(img, 500, 205, 80, 80 );
+img = loadImage("pressure.png");
+image(img, 500, 205, 75, 75 );
 img = loadImage("Winds.png");
 image(img, 500, 55, 80, 80 );
 img = loadImage("humidity.png");tint(255);
@@ -325,19 +378,21 @@ for (float q = 255; q > 0; q -=7){
  w = w + 20; 
 
 textSize(32);text("Todays High", 200,200);
-textSize(32);text("X ", 280,250);
+textSize(32);text(temp_max, 275,250);
 textSize(32);text("Todays Low", 550,550);
-textSize(32);text("X ", 640,600);
-textSize(32);text("Wind X", 550,105);
-textSize(32);text("Humidity X", 550,175);
-textSize(32);text("Precipitation X", 550,245);
+textSize(32);text(temp_min, 635,600);
+textSize(32);text("Wind "  + speed + " mph", 550,105);
+textSize(32);text("Humidity  " + humidity, 550,175);
+textSize(32);text("Pressure" + pressure, 550,245);
+textSize(15);text("mb", 765,245);
+
 }
 }
 //21 7
 else if (mousePressed && mouseX > 720 && mouseY > 720 && (h > 21) && (h < 7)) {
 background(71,74,87);
-img = loadImage("precipitation.png");
-image(img, 500, 205, 80, 80 );
+img = loadImage("pressure.png");
+image(img, 500, 205, 75, 75 );
 img = loadImage("Winds.png");
 image(img, 500, 55, 80, 80 );
 img = loadImage("humidity.png");tint(255);
@@ -393,13 +448,13 @@ fill(71,74,87);stroke(0);rect(w, 760, 40, 40);
 }
 fill(255, 255, 0);
 textSize(32);text("Todays High", 200,200);
-textSize(32);text("X ", 280,250);
+textSize(32);text(temp_max, 275,250);
 textSize(32);text("Todays Low", 550,550);
-textSize(32);text("X ", 640,600);
-textSize(32);text("Wind X", 550,105);
-textSize(32);text("Humidity X", 550,175);
-textSize(32);text("Precipitation X", 550,245);
-
+textSize(32);text(temp_min, 635,600);
+textSize(32);text("Wind " + speed + " mph", 550,105);
+textSize(32);text("Humidity  " + humidity, 550,175);
+textSize(32);text("Pressure" + pressure, 550,245);
+textSize(15);text("mb", 765,245);
 //This will be snow
 //a = 255;
 //b = 255;
@@ -445,10 +500,12 @@ fill(255, 255, 0);circle(510,120,12);
 textSize(22);text("Click the mouse once and then hold down", 0,600);
 textSize(22);text("the W key to see the 7 day weather report.", 0,625);
 textSize(32);text("Currently", 400,100);
-textSize(42);text("X", 460,150); 
+textSize(42);text(temp, 450,150); 
 textSize(20);text("Todays", 723,665); 
 textSize(20);text("Weather", 720,685);
 textSize(20);text("Forcast", 720, 705);
+textSize(15);text("F", 505,150);
+textSize(15);text(description, 430,170);
 
 textSize(32);
 text("Todays date is ", 100, 200); 
@@ -458,7 +515,7 @@ text("Todays date is ", 100, 200);
 textSize(32);
 text("/", 185, 240); 
 textSize(32);
-text("/", 215, 240); 
+text("/", 235, 240); 
 
 int month = month();
 String m = String.valueOf(month);
@@ -470,7 +527,7 @@ text(s, 200, 240);
 
 int year = year();
 String y = String.valueOf(year);
-text(y, 230, 240);
+text(y, 250, 240);
 
 textSize(32);
 text("The time now is:", 480,525); 
@@ -529,7 +586,9 @@ fill(255, 200, 0);circle(710,120,12);
 textSize(22);text("Click the mouse once and then hold down", 0,600);
 textSize(22);text("the W key to see the 7 day weather report.", 0,625);
 textSize(32);text("Currently", 600,100);
-textSize(42);text("X", 660,150);
+textSize(42);text(temp, 650,150);
+textSize(15);text("F", 705,150);
+textSize(15);text(description, 610,170);
 
 textSize(20);text("Todays", 723,665); 
 textSize(20);text("Weather", 720,685);
@@ -541,7 +600,7 @@ text("Todays date is ", 100, 200);
 textSize(32);
 text("/", 185, 240); 
 textSize(32);
-text("/", 215, 240); 
+text("/", 235, 240); 
 
 int month = month();
 String m = String.valueOf(month);
@@ -553,7 +612,7 @@ text(s, 200, 240);
 
 int year = year();
 String y = String.valueOf(year);
-text(y, 230, 240);
+text(y, 250, 240);
 
 textSize(32);
 text("The time now is:", 480,525); 
@@ -630,18 +689,19 @@ fill(255, 255, 0);
 textSize(22);text("Click the mouse once and then hold down", 0,600);
 textSize(22);text("the W key to see the 7 day weather report.", 0,625);
 textSize(32);text("Currently", 450,100);
-textSize(42);text("X", 510,150);  
+textSize(42);text(temp, 500,150);  
 textSize(20);text("Todays", 723,665);  
 textSize(20);text("Weather", 720,685);
 textSize(20);text("Forcast", 720, 705);
-
+textSize(15);text("F", 555,150);  
+textSize(15);text(description, 470,170);
 textSize(32);
 text("Todays date is ", 100, 200); 
 
 textSize(32);
 text("/", 185, 240); 
 textSize(32);
-text("/", 215, 240); 
+text("/", 235, 240); 
 
 int month = month();
 String m = String.valueOf(month);
@@ -653,7 +713,7 @@ text(s, 200, 240);
 
 int year = year();
 String y = String.valueOf(year);
-text(y, 230, 240);
+text(y, 250, 240);
 
 textSize(32);
 text("The time now is:", 480,525); 
