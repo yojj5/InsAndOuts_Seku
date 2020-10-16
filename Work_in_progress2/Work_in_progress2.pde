@@ -1,8 +1,9 @@
-//Max v2.4 by Seku Burris
-// Move the mouse in various directions to see Max's Eye color change.
-//Press the power button at the bottom right to turn on Max
-//hold down the power button for the latest wheather reports
-//press any key to turn Max off
+//Moody Weather app by Seku K. Burris
+//The background and emojis change in facial expressions and color
+//based on what time of the day it is.
+//At 5p.m.  and 9p.m. o clock the facial expressions and backgrounds 
+//change to represent what time of day it is.
+
 float a;
 float b;
 float c;
@@ -49,12 +50,13 @@ size(800, 800);
 String key= "1e73eb5975b9055051f49fa6a33e1032"; 
 
 String url = "http://api.openweathermap.org/data/2.5/weather?q=Queens&units=imperial&appid=" + key;
-String Weekly = "http://api.openweathermap.org/data/2.5/forecast?q=Queens&units=imperial&appid=" + key;
-  
-  
-  ///5 day Weekly forcast************
+
+
+String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=29.6512&lon=-82.3426&exclude=current,hourly,minute,alerts,current&units=imperial&appid=" + key; 
+
+  ///7 day Weekly forcast************
   JSONObject forecast = loadJSONObject(Weekly);
-  JSONArray list= forecast.getJSONArray("list");
+  JSONArray daily= forecast.getJSONArray("daily");
   
   
   JSONObject current_weather = loadJSONObject(url); 
@@ -75,7 +77,7 @@ String Weekly = "http://api.openweathermap.org/data/2.5/forecast?q=Queens&units=
   JSONObject descriptions_object = descriptions_array.getJSONObject(0); 
   description = descriptions_object.getString("description");
 
- print(list);
+ print(daily);
 println(speed);  
 println(temp_min);
 println(temp_max); 
@@ -505,7 +507,7 @@ textSize(20);text("Todays", 723,665);
 textSize(20);text("Weather", 720,685);
 textSize(20);text("Forcast", 720, 705);
 textSize(15);text("F", 505,150);
-textSize(15);text(description, 430,170);
+textSize(15);text(description, 380,170);
 
 textSize(32);
 text("Todays date is ", 100, 200); 
@@ -588,7 +590,7 @@ textSize(22);text("the W key to see the 7 day weather report.", 0,625);
 textSize(32);text("Currently", 600,100);
 textSize(42);text(temp, 650,150);
 textSize(15);text("F", 705,150);
-textSize(15);text(description, 610,170);
+textSize(15);text(description, 560,170);
 
 textSize(20);text("Todays", 723,665); 
 textSize(20);text("Weather", 720,685);
@@ -694,7 +696,7 @@ textSize(20);text("Todays", 723,665);
 textSize(20);text("Weather", 720,685);
 textSize(20);text("Forcast", 720, 705);
 textSize(15);text("F", 555,150);  
-textSize(15);text(description, 470,170);
+textSize(15);text(description, 420,170);
 textSize(32);
 text("Todays date is ", 100, 200); 
 
