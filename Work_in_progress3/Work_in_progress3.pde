@@ -44,11 +44,11 @@ String wind;
 int pressure;
 int feels_like;
 int dt;
-
-
+int daily;
+int day;
 int epoch = 1602867600;
 String date = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date (epoch*1000L));
-
+int day_array;
 
 void setup(){
 size(800, 800); 
@@ -56,24 +56,24 @@ String key= "1e73eb5975b9055051f49fa6a33e1032";
 
 String url = "http://api.openweathermap.org/data/2.5/weather?q=Queens&units=imperial&appid=" + key;
 
-String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon=-73.3426&exclude=daily,hourly,minute,alerts&units=imperial&appid=" + key; 
+String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon=-73.3426&exclude=hourly,minute,alerts&units=imperial&appid=" + key; 
 
   //7 day Weekly forcast starting with today as the first day************
   
   JSONObject forecast = loadJSONObject(Weekly);
   JSONObject current = forecast.getJSONObject("current");
-  //JSONObject feels_like = current_object.getJSONObject("feels_like");
+  JSONArray daily = forecast.getJSONArray("daily");
   feels_like = int(current.getFloat("feels_like"));
   dt = int(current.getFloat("dt"));
-
-  //JSONObject dt = forecast.getJSONObject("dt");
- // daily_dt = int(dt.getFloat("daily_dt"));
-//import java.util.*;
-//Date d = new Date();
-//println(d.getTime());
-
-
-  
+  //JSONArray day = daily.getJSONArray("day");
+  //JSONObject day = forecast.getJSONObject("day");
+  //day = int(forecast.getFloat("day"));
+  JSONArray day= forecast.getJSONArray("day");
+  //day = int(.getFloat("day"));
+  //JSONObject day_array = day.getJSONObject(5); 
+  //JSONObject day = day_array.getJSONObject(0); 
+ 
+   
   JSONObject current_weather = loadJSONObject(url); 
   JSONObject main= current_weather.getJSONObject("main"); 
   temp = int(main.getFloat("temp"));
@@ -87,9 +87,11 @@ String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon
   JSONArray descriptions_array = current_weather.getJSONArray("weather"); 
   JSONObject descriptions_object = descriptions_array.getJSONObject(0); 
   description = descriptions_object.getString("description");
-
+println(day_array);
+println(day);
+println(daily);
 println(dt);
-println(current);
+//println(current);
 println(feels_like);
 println(speed);  
 println(temp_min);
@@ -263,8 +265,8 @@ textSize(32);text("7-DAY FORECAST",440,350);
 
 for (int i = 0; i < 50; i++) {
   float r = random(200);
-  stroke(0,0,r*15);
-  line(0, i, 10+r, i);
+  stroke(0,0,r*5);
+  line(0, i, 800+r, i);
 
 }
 }
@@ -335,7 +337,7 @@ textSize(32);text(temp_max, 275,250);
 textSize(32);text("Todays Low", 545,550);
 textSize(32);text(temp_min, 635,600);
 textSize(32);text("Wind " + speed + " mph", 550,105);
-textSize(32);text("Humidity " + humidity, 550,175);
+textSize(32);text("Humidity " + humidity + "%", 550,175);
 textSize(32);text("Pressure " + pressure, 550,245);
 textSize(15);text("mb", 775,245);
 
@@ -405,7 +407,7 @@ textSize(32);text(temp_max, 275,250);
 textSize(32);text("Todays Low", 550,550);
 textSize(32);text(temp_min, 635,600);
 textSize(32);text("Wind "  + speed + " mph", 550,105);
-textSize(32);text("Humidity  " + humidity, 550,175);
+textSize(32);text("Humidity  " + humidity + "%", 550,175);
 textSize(32);text("Pressure" + pressure, 550,245);
 textSize(15);text("mb", 765,245);
 
@@ -475,7 +477,7 @@ textSize(32);text(temp_max, 275,250);
 textSize(32);text("Todays Low", 550,550);
 textSize(32);text(temp_min, 635,600);
 textSize(32);text("Wind " + speed + " mph", 550,105);
-textSize(32);text("Humidity  " + humidity, 550,175);
+textSize(32);text("Humidity  " + humidity + "%", 550,175);
 textSize(32);text("Pressure" + pressure, 550,245);
 textSize(15);text("mb", 765,245);
 //This will be snow
