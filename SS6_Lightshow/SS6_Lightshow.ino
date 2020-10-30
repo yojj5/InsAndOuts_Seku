@@ -19,6 +19,15 @@ void loop() {
   buttonState = digitalRead(buttonPin);
   delay (10);
 
+ // for (int i = 0; i <=255; i +=5) {
+  //analogWrite(11, i);
+ // delay(50);
+ // }
+ //for (int i = 255; i >= 0; i -=5) {
+ // analogWrite(10, i);
+ // delay(50);
+  
+  
   if (buttonState == HIGH) { 
     //digitalWrite(LED, HIGH);    
   digitalWrite(13, HIGH);// put your main code here, to run repeatedly:
@@ -37,8 +46,15 @@ void loop() {
    delay(1000);
    digitalWrite(10, LOW);
    delay(1000);
-  
-  
+      for (int i = 0; i <=255; i +=5) {
+  analogWrite(11, i);
+ delay(50);
+  }
+ for (int i = 255; i >= 0; i -=5) {
+  analogWrite(10, i);
+  delay(50);
+
+ }
   } else {  
   digitalWrite(13, LOW);
   digitalWrite(12, LOW);
