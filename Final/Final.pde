@@ -49,7 +49,7 @@ int epoch = 1603538087;
 String date = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date (epoch*1000L));
 int day1;
 int weather;
-int hourly;
+
 
 void setup(){
 size(800, 800); 
@@ -57,7 +57,7 @@ String key= "1e73eb5975b9055051f49fa6a33e1032";
 
 String url = "http://api.openweathermap.org/data/2.5/weather?q=Queens&units=imperial&appid=" + key;
 
-String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon=-73.3426&exclude=minute,alerts&units=imperial&appid=" + key; 
+String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon=-73.3426&exclude=minute,hourly,alerts&units=imperial&appid=" + key; 
 
   //7 day Weekly forcast starting with today as the first day************
   
@@ -66,7 +66,7 @@ String Weekly = "https://api.openweathermap.org/data/2.5/onecall?lat=40.6512&lon
   JSONArray daily = forecast.getJSONArray("daily");
   feels_like = int(current.getFloat("feels_like"));
   dt = int(current.getFloat("dt"));
- JSONArray hourly = forecast.getJSONArray("hourly");
+
 
    
   JSONObject current_weather = loadJSONObject(url); 
@@ -89,7 +89,7 @@ println(day);
 println(temp);
 
 
-println(hourly);
+
 println(daily);
 println(dt);
 println(date);
