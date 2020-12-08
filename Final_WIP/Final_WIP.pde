@@ -1,39 +1,82 @@
 
 import ddf.minim.*;
 Minim minim;
+PImage img;
 
-AudioPlayer player;
- 
+AudioPlayer Angry;
+AudioPlayer Annoyed;
+AudioPlayer Confused;
+AudioPlayer Happy;
+AudioPlayer Confident;
+AudioPlayer Calm; 
+AudioPlayer Disappointed;
+AudioPlayer Sad;
+AudioPlayer Evil;
+AudioPlayer Default;
+
+
 import processing.serial.*; 
 Serial myPort; 
 int val=0;
 
-
-PImage img;
-
+PImage cursor;
 
 void setup(){
 size(800, 800); 
 printArray(Serial.list()); 
   String portName = Serial.list()[0];
-  //myPort = new Serial(this, portName, 9600);
+ myPort = new Serial(this, portName, 9600);
+
+smooth();
+noCursor();
+
+cursor = loadImage("rocketcursor.png");
+
+
+
+
+
+
 
 minim = new Minim(this);
-
-
+Angry = minim.loadFile("Three Days Grace - Riot (Official Audio).mp3");
+Annoyed = minim.loadFile("Nope (Construction Worker TF2) - Gaming Sound Effect (HD).mp3");
+Confused = minim.loadFile("Why Can't We Be Friends.mp3");
+Happy = minim.loadFile("Bag Raiders - Shooting Stars (Lyrics).mp3");
+Confident = minim.loadFile("Nonstop.mp3");
+Calm= minim.loadFile("Interstellar - Main Theme - Hans Zimmer.mp3"); 
+Disappointed = minim.loadFile("DaBaby ROCKSTAR FT RODDY RICH (Instrumental).mp3");
+Sad = minim.loadFile("Naruto - Sadness and Sorrow (Odece Trap Remix).mp3");
+Evil = minim.loadFile("Eminem clean.mp3");
+Default = minim.loadFile("Kanye West - All Of The Lights (Instrumental).mp3"); 
+Default.loop();
 
 }
 
 void keyPressed(){
 
  if (key == 's') {
-     player.pause(); 
- //reset button
+Angry.pause();
+Annoyed.pause();
+Confused.pause();
+Happy.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Default.rewind();
+Default.loop();
+
+//reset button
 noStroke();fill(71,74,87);rect(1, 515, 800, 10);
 //noStroke();fill(71,74,87);rect(320, 660, 120, 40);
 stroke(255);strokeWeight(10);noFill();rect(320, 660, 124, 44);
 
  }
+
+
+
 }
 
 
@@ -41,6 +84,8 @@ stroke(255);strokeWeight(10);noFill();rect(320, 660, 124, 44);
 
 
 void draw(){
+
+ myPort.write(0);
 
 
 noStroke();
@@ -50,11 +95,13 @@ img = loadImage("planets3.jpg");
 image(img, 0,0, 800, 600 );
 fill(0);rect(0,520,800,400);
 
+
+
 fill(71,74,87);textSize(32);text("Welcome to EMO!", 40,100);
 fill(71,74,87);textSize(22);text("The emotional regulator app", 40,140);
 fill(71,74,87);textSize(22);text("Click on any planet to play a song and enjoy a light show.", 100,550);
-fill(71,74,87);textSize(22);text("DON'T - Click the same planet while it's song is already playing.", 80,580);
-fill(71,74,87);textSize(22);text("DON'T - Click on a different planet while another song is playing.", 80,610);
+//fill(71,74,87);textSize(22);text("", 80,580);
+fill(71,74,87);textSize(22);text("Please wait for lights to stop flashing before starting another song.", 60,740);
 
 
 //reset button
@@ -65,7 +112,7 @@ noStroke();fill(71,74,87);rect(320, 660, 120, 40);
 
 //}
 fill(0);textSize(20);text("Press 'S'", 345,680);
-fill(0);textSize(15);text("(Stop music)", 335,695);
+fill(0);textSize(15);text("(Defualt music)", 325,695);
 noStroke();
 //noStroke();fill(71,74,87);rect(1, 5, 40, 40);
 //noStroke();fill(71,74,87);rect(1, 5, 40, 40);
@@ -203,15 +250,35 @@ noStroke();strokeWeight(0);fill(0);ellipse(767,254,8,5);
 noStroke();strokeWeight(0);fill(112,128,144);ellipse(767,252,9,4);
 
 
+//saturn
+noStroke();strokeWeight(0);fill(0);ellipse(550,200,9,11);
+noStroke();strokeWeight(0);fill(0);ellipse(570,200,9,11);
+noStroke();strokeWeight(0);fill(0);ellipse(565,213,9,9);
+noStroke();strokeWeight(0);fill(220,220,220);ellipse(563,213,9,9);
+stroke(0);strokeWeight(2);line(560,225,565,225);
 
 //THE SUN MOUSEPRESSED
 if (mouseX < 180 && mouseY < 370 && mouseY > 210){
 stroke(0);strokeWeight(8);noFill();circle(85,290,166);
 fill(255,0, 0);
 textSize(32);text("ANGRY", 80,180);
+textSize(22);text("(The Sun)", 80,200);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 180 && mouseY < 370 && mouseY > 200 && mousePressed){
-player = minim.loadFile("Three Days Grace - Riot (Official Audio).mp3");
-player.loop();
+Angry.rewind();
+Angry.loop();
+
+Annoyed.pause();
+Confused.pause();
+Happy.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Default.pause();
 }
 }
 //EARTH MOUSEPRESSED
@@ -219,29 +286,77 @@ if (mouseX < 420 && mouseX > 300 && mouseY > 220 && mouseY < 340){
 noFill();stroke(0);strokeWeight(8);ellipse(355,280,110,110);
 fill(255, 255, 0);
 textSize(32);text("HAPPY", 300,200);
+textSize(22);text("(Earth)", 315,220);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 420 && mouseX > 300 && mouseY > 220 && mouseY < 340 && mousePressed){
-player = minim.loadFile("Bag Raiders - Shooting Stars (Lyrics).mp3");
-player.loop();
+Happy.rewind();
+Happy.loop();
+
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Default.pause();
 }
 }
-//URANUS MOUSEPRESSED
+//NEPTUNE MOUSEPRESSED
 if (mouseX < 730 && mouseX > 670 && mouseY > 380 && mouseY < 440){
 noFill();stroke(0);strokeWeight(6);ellipse(700,410,65,65);
 fill(0,0, 255);
-textSize(32);text("SAD", 600,400);
+textSize(22);text("SAD", 600,400);
+textSize(22);text("(Neptune)", 570,420);
+img = loadImage("Light.jpg");
+image(img, 500, 640, 75, 75 );
+fill(255,0,0);textSize(42);text("WARNING!!!", 280,590);
+fill(255,0,0);textSize(22);text("Flashing lights will activate if you click here.", 140,620);
 if (mouseX < 730 && mouseX > 670 && mouseY > 380 && mouseY < 440 && mousePressed){
-player = minim.loadFile("Naruto - Sadness and Sorrow (Odece Trap Remix).mp3");
-player.loop();
+ 
+  
+  myPort.write(1);
+ println ("1");
+
+Sad.rewind();
+Sad.loop();
+
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Evil.pause();
+Happy.pause();
+Default.pause();
 }
 }
 //JUPITER MOUSEPRESSED
 if (mouseX < 530 && mouseX > 400 && mouseY > 400 && mouseY < 520){
 noFill();stroke(0);strokeWeight(8);ellipse(470,460,122,112);
 fill(169,169, 169);
-textSize(32);text("CALM", 500,400);
+textSize(22);text("CALM", 525,400);
+textSize(22);text("(Jupiter)", 520,420);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 530 && mouseX > 400 && mouseY > 400 && mouseY < 520 && mousePressed){
-player = minim.loadFile("Interstellar - Main Theme - Hans Zimmer.mp3");
-player.loop(); 
+Calm.rewind();
+  Calm.loop();
+
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Happy.pause();
+Default.pause();
 }
 }
 
@@ -250,20 +365,56 @@ player.loop();
 if (mouseX < 300 && mouseX > 200 && mouseY > 380 && mouseY < 490){
 stroke(0);strokeWeight(8);noFill();circle(250,435,78);
 fill(205,165,78);
-textSize(32);text("CONFIDENT", 200,380);
+textSize(30);text("CONFIDENT", 200,380);
+textSize(30);text("(Venus)", 230,400);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 300 && mouseX > 200 && mouseY > 380 && mouseY < 490 && mousePressed){
-player = minim.loadFile("Nonstop.mp3");
-player.loop(); 
+  Confident.rewind();
+  Confident.loop();
+
+
+
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Happy.pause();
+Default.pause();
 }
 }
-//NEPTUNE MOUSE PRESSED
+//URANUS MOUSE PRESSED
 if (mouseX < 700 && mouseX > 600 && mouseY > 50 && mouseY < 140){
 stroke(0);strokeWeight(8);noFill();circle(650,97,82);
 fill(80,80,255);
 textSize(22);text("DISAPPOINTED", 450,80);
+textSize(22);text("(Uranus)", 480,100);
+img = loadImage("Light.jpg");
+image(img, 500, 640, 75, 75 );
+fill(255,0,0);textSize(42);text("WARNING!!!", 280,590);
+fill(255,0,0);textSize(22);text("Flashing lights will activate if you click here.", 140,620);
 if (mouseX < 700 && mouseX > 600 && mouseY > 50 && mouseY < 140 && mousePressed){
-player = minim.loadFile("DaBaby ROCKSTAR FT RODDY RICH (Instrumental).mp3");
-player.loop(); 
+   
+  
+  myPort.write(3); 
+    println ("3");
+  
+  Disappointed.rewind();
+  Disappointed.loop();
+
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Sad.pause();
+Evil.pause();
+Happy.pause();
+Default.pause();
 }
 }
 
@@ -273,13 +424,27 @@ if (mouseX < 220 && mouseX > 180 && mouseY > 180 && mouseY < 230){
 stroke(0);strokeWeight(4);noFill();ellipse(200,207,38,38);
 fill(205,165,78);
 textSize(22);text("ANNOYED", 220,200);
+textSize(22);text("(Mecury)", 230,220);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 220 && mouseX > 180 && mouseY > 180 && mouseY < 230 && mousePressed){
 fill(255);ellipse(225,215,8,6);
 fill(255);ellipse(230,230,15,10);
 fill(255);ellipse(250,250,40,30);
 fill(0);textSize(12);text("Nope", 235,253);
-player = minim.loadFile("Nope (Construction Worker TF2) - Gaming Sound Effect (HD).mp3");
-player.play();
+Annoyed.rewind();
+Annoyed.play();
+
+Happy.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Default.pause();
 }
 }
 //MARS MOUSEPRESSED
@@ -287,22 +452,76 @@ if (mouseX < 420 && mouseX > 320 && mouseY > 20 && mouseY < 120){
 stroke(0);strokeWeight(8);noFill();circle(373,70,80);
 fill(205,165,78);
 textSize(22);text("CONFUSED", 400,120);
+textSize(22);text("(Mars)", 420,140);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
 if (mouseX < 420 && mouseX > 320 && mouseY > 20 && mouseY < 120 && mousePressed){
-player = minim.loadFile("Why Can't We Be Friends.mp3");
-player.loop();
+Confused.rewind();
+  Confused.loop();
+  
+Happy.pause();
+Annoyed.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Evil.pause();
+Default.pause();
 }
 }
 //PLUTO MOUSEPRESSED
 if (mouseX < 800 && mouseX > 745 && mouseY > 215 && mouseY < 265){
 stroke(0);strokeWeight(5);noFill();circle(771,242,45);
-fill(205,0,0);
-textSize(22);text("EVIL", 700,220);
+fill(71,74,87);
+textSize(22);text("EVIL", 690,220);
+textSize(22);text("(Pluto)", 680,240);
+img = loadImage("Light.jpg");
+image(img, 500, 640, 75, 75 );
+fill(255,0,0);textSize(42);text("WARNING!!!", 280,590);
+fill(255,0,0);textSize(22);text("Flashing lights will activate if you click here.", 140,620);
 if (mouseX < 800 && mouseX > 745 && mouseY > 215 && mouseY < 265 && mousePressed){
-player = minim.loadFile("Eminem - Venom (Full Original Instrumental).mp3");
-player.loop();
+   
+  
+  myPort.write(4); 
+    println ("4");
+  
+  Evil.rewind();
+  Evil.loop();
+  
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Happy.pause(); 
+Default.pause();
 }
 }
+if (mouseX < 600 && mouseX > 510 && mouseY > 175 && mouseY < 250){
 
+fill(255);
+textSize(22);text("QUIET", 610,220);
+textSize(22);text("(Saturn)", 600,240);
+img = loadImage("nolight.jpg");
+image(img, 500, 580, 75, 75 );
+fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
+if (mouseX < 600 && mouseX > 510 && mouseY > 175 && mouseY < 260 && mousePressed){
+Evil.pause();
+Annoyed.pause();
+Confused.pause();
+Angry.pause();
+Confident.pause();
+Calm.pause(); 
+Disappointed.pause();
+Sad.pause();
+Happy.pause(); 
+Default.pause();
+}
+}
 
 
 
@@ -341,7 +560,7 @@ z = z + 30;
 }
 
 
-
+image(cursor, mouseX,mouseY, 50, 50);
 
 //custom functions start **********
 }
