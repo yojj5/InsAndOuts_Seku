@@ -97,7 +97,7 @@ fill(0);rect(0,520,800,400);
 
 
 
-fill(71,74,87);textSize(32);text("Welcome to EMO!", 40,100);
+fill(71,74,87);textSize(32);text("Astro-Strobe!", 40,100);
 fill(71,74,87);textSize(22);text("The emotional regulator app", 40,140);
 fill(71,74,87);textSize(22);text("Click on any planet to play a song and enjoy a light show.", 100,550);
 //fill(71,74,87);textSize(22);text("", 80,580);
@@ -263,11 +263,16 @@ stroke(0);strokeWeight(8);noFill();circle(85,290,166);
 fill(255,0, 0);
 textSize(32);text("ANGRY", 80,180);
 textSize(22);text("(The Sun)", 80,200);
-img = loadImage("nolight.jpg");
-image(img, 500, 580, 75, 75 );
-fill(255,0,0);textSize(22);text("No flashing lights.", 280,620);
+img = loadImage("Light.jpg");
+image(img, 500, 640, 75, 75 );
+fill(255,0,0);textSize(42);text("WARNING!!!", 280,590);
+fill(255,0,0);textSize(22);text("Flashing lights will activate if you click here.", 140,620);
 if (mouseX < 180 && mouseY < 370 && mouseY > 200 && mousePressed){
-Angry.rewind();
+  
+  myPort.write(5);
+ println ("5");
+
+  Angry.rewind();
 Angry.loop();
 
 Annoyed.pause();
