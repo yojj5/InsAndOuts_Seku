@@ -1,3 +1,8 @@
+//Emo the emptional regulator app. 
+//By Seku K. Burris
+//Connect the wire from your computer to the Atro-Strobe
+//to enjoy a light show.
+
 
 import ddf.minim.*;
 Minim minim;
@@ -25,7 +30,7 @@ void setup(){
 size(800, 800); 
 printArray(Serial.list()); 
   String portName = Serial.list()[0];
- myPort = new Serial(this, portName, 9600);
+myPort = new Serial(this, portName, 9600);
 
 smooth();
 noCursor();
@@ -42,13 +47,13 @@ minim = new Minim(this);
 Angry = minim.loadFile("Three Days Grace - Riot (Official Audio).mp3");
 Annoyed = minim.loadFile("Nope (Construction Worker TF2) - Gaming Sound Effect (HD).mp3");
 Confused = minim.loadFile("Why Can't We Be Friends.mp3");
-Happy = minim.loadFile("Bag Raiders - Shooting Stars (Lyrics).mp3");
+Happy = minim.loadFile("Pharrell Williams - Happy (Official Music Video).mp3");
 Confident = minim.loadFile("Nonstop.mp3");
 Calm= minim.loadFile("Interstellar - Main Theme - Hans Zimmer.mp3"); 
 Disappointed = minim.loadFile("DaBaby ROCKSTAR FT RODDY RICH (Instrumental).mp3");
 Sad = minim.loadFile("Naruto - Sadness and Sorrow (Odece Trap Remix).mp3");
 Evil = minim.loadFile("Eminem clean.mp3");
-Default = minim.loadFile("Kanye West - All Of The Lights (Instrumental).mp3"); 
+Default = minim.loadFile("Bag Raiders - Shooting Stars (Lyrics).mp3"); 
 Default.loop();
 
 }
@@ -97,9 +102,9 @@ fill(0);rect(0,520,800,400);
 
 
 
-fill(71,74,87);textSize(32);text("Astro-Strobe!", 40,100);
+fill(71,74,87);textSize(32);text("EMO!", 40,100);
 fill(71,74,87);textSize(22);text("The emotional regulator app", 40,140);
-fill(71,74,87);textSize(22);text("Click on any planet to play a song and enjoy a light show.", 100,550);
+fill(71,74,87);textSize(22);text("Click on the planet that fits your current mood.", 140,550);
 //fill(71,74,87);textSize(22);text("", 80,580);
 fill(71,74,87);textSize(22);text("Please wait for lights to stop flashing before starting another song.", 60,740);
 
